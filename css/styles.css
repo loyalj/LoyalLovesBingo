@@ -1,0 +1,72 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#controls {
+    padding-bottom: 10px;
+}
+
+.clear {
+    clear: both;
+}
+
+#bingoBoard {
+    background-color: hsl(0, 0%, 20%);
+    padding: 3px;
+    width: 894px;
+}
+
+#lastCalledNumber {
+    width: 128px;
+    height: 128px;
+    margin-top: 2px;
+
+    float: left;
+    clear: none;
+
+    background-color: hsl(0, 0%, 10%);
+    color: hsl(56, 100%, 50%);
+
+    /*font-size: 6em;*/
+    text-align: center;
+}
+
+#lastNumber {
+    font-size: 5em;
+}
+
+#lastLetter {
+    font-size: 1.5em;
+    color: hsl(70, 100%, 93%);
+}
+
+#numbersCalledBoard {
+    float: left;
+    clear: none;
+}
+
+
+
+.bingoLetter, .bingoNumber {
+    text-align: center;
+    font-size: 32px;
+
+    padding: 5px;
+    width: 32px;
+    height: 32px;
+}
+
+.bingoLetter {
+    background-color: hsl(0, 70%, 50%);
+    color: hsl(0, 100%, 100%);
+}
+
+.bingoNumber {
+    background-color: hsl(0, 0%, 10%);
+    color: hsl(70, 100%, 93%);
+}
+
+
+.called  {
+    color: hsl(56, 100%, 50%);
+}

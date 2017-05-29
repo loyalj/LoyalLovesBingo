@@ -1,0 +1,2 @@
+header("/index.html");
+die();

@@ -1,0 +1,132 @@
+<!doctype html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>JS Bingo</title>
+        <meta name="description" content="Js Experiment">
+        <meta name="author" content="Chris Johnson">
+
+        <link rel="stylesheet" href="css/styles.css" type="text/css">
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="js/games.js"></script>
+        <script src="js/bingo.js"></script>
+        <script src="js/main.js"></script>
+    </head>
+
+    <body>
+        <div id="controls">
+            <button id="btnCallNumber">Call Number</button>
+            <button id="btnResetBoard">Reset Board</button>
+        </div>
+
+        <div id="bingoBoard">
+            <div id="lastCalledNumber">
+
+                <span id="lastNumber">00</span><br>
+                <span id="lastLetter">--</span>
+            </div>
+            <div id="numbersCalledBoard">
+                <table>
+                    <tr>
+                        <td class="bingoLetter">B</td>
+                        <td id="bn-1" class="bingoNumber">1</td>
+                        <td id="bn-2" class="bingoNumber">2</td>
+                        <td id="bn-3" class="bingoNumber">3</td>
+                        <td id="bn-4" class="bingoNumber">4</td>
+                        <td id="bn-5" class="bingoNumber">5</td>
+                        <td id="bn-6" class="bingoNumber">6</td>
+                        <td id="bn-7" class="bingoNumber">7</td>
+                        <td id="bn-8" class="bingoNumber">8</td>
+                        <td id="bn-9" class="bingoNumber">9</td>
+                        <td id="bn-10" class="bingoNumber">10</td>
+                        <td id="bn-11" class="bingoNumber">11</td>
+                        <td id="bn-12" class="bingoNumber">12</td>
+                        <td id="bn-13" class="bingoNumber">13</td>
+                        <td id="bn-14" class="bingoNumber">14</td>
+                        <td id="bn-15" class="bingoNumber">15</td>
+                    </tr>
+
+                    <tr>
+                        <td class="bingoLetter">I</td>
+                        <td id="bn-16"  class="bingoNumber">16</td>
+                        <td id="bn-17"  class="bingoNumber">17</td>
+                        <td id="bn-18"  class="bingoNumber">18</td>
+                        <td id="bn-19"  class="bingoNumber">19</td>
+                        <td id="bn-20"  class="bingoNumber">20</td>
+                        <td id="bn-21"  class="bingoNumber">21</td>
+                        <td id="bn-22"  class="bingoNumber">22</td>
+                        <td id="bn-23"  class="bingoNumber">23</td>
+                        <td id="bn-24"  class="bingoNumber">24</td>
+                        <td id="bn-25" class="bingoNumber">25</td>
+                        <td id="bn-26" class="bingoNumber">26</td>
+                        <td id="bn-27" class="bingoNumber">27</td>
+                        <td id="bn-28" class="bingoNumber">28</td>
+                        <td id="bn-29" class="bingoNumber">29</td>
+                        <td id="bn-30" class="bingoNumber">30</td>
+                    </tr>
+
+                    <tr>
+                        <td class="bingoLetter">N</td>
+                        <td id="bn-31"  class="bingoNumber">31</td>
+                        <td id="bn-32"  class="bingoNumber">32</td>
+                        <td id="bn-33"  class="bingoNumber">33</td>
+                        <td id="bn-34"  class="bingoNumber">34</td>
+                        <td id="bn-35"  class="bingoNumber">35</td>
+                        <td id="bn-36"  class="bingoNumber">36</td>
+                        <td id="bn-37"  class="bingoNumber">37</td>
+                        <td id="bn-38"  class="bingoNumber">38</td>
+                        <td id="bn-39"  class="bingoNumber">39</td>
+                        <td id="bn-40" class="bingoNumber">40</td>
+                        <td id="bn-41" class="bingoNumber">41</td>
+                        <td id="bn-42" class="bingoNumber">42</td>
+                        <td id="bn-43" class="bingoNumber">43</td>
+                        <td id="bn-44" class="bingoNumber">44</td>
+                        <td id="bn-45" class="bingoNumber">45</td>
+                    </tr>
+
+                    <tr>
+                        <td class="bingoLetter">G</td>
+                        <td id="bn-46" class="bingoNumber">46</td>
+                        <td id="bn-47" class="bingoNumber">47</td>
+                        <td id="bn-48" class="bingoNumber">48</td>
+                        <td id="bn-49" class="bingoNumber">49</td>
+                        <td id="bn-50" class="bingoNumber">50</td>
+                        <td id="bn-51" class="bingoNumber">51</td>
+                        <td id="bn-52" class="bingoNumber">52</td>
+                        <td id="bn-53" class="bingoNumber">53</td>
+                        <td id="bn-54" class="bingoNumber">54</td>
+                        <td id="bn-55" class="bingoNumber">55</td>
+                        <td id="bn-56" class="bingoNumber">56</td>
+                        <td id="bn-57" class="bingoNumber">57</td>
+                        <td id="bn-58" class="bingoNumber">58</td>
+                        <td id="bn-59" class="bingoNumber">59</td>
+                        <td id="bn-60" class="bingoNumber">60</td>
+                    </tr>
+
+                    <tr>
+                        <td class="bingoLetter">O</td>
+                        <td id="bn-61" class="bingoNumber">61</td>
+                        <td id="bn-62" class="bingoNumber">62</td>
+                        <td id="bn-63" class="bingoNumber">63</td>
+                        <td id="bn-64" class="bingoNumber">64</td>
+                        <td id="bn-65" class="bingoNumber">65</td>
+                        <td id="bn-66" class="bingoNumber">66</td>
+                        <td id="bn-67" class="bingoNumber">67</td>
+                        <td id="bn-68" class="bingoNumber">68</td>
+                        <td id="bn-69" class="bingoNumber">69</td>
+                        <td id="bn-70" class="bingoNumber">70</td>
+                        <td id="bn-71" class="bingoNumber">71</td>
+                        <td id="bn-72" class="bingoNumber">72</td>
+                        <td id="bn-73" class="bingoNumber">73</td>
+                        <td id="bn-74" class="bingoNumber">74</td>
+                        <td id="bn-75" class="bingoNumber">75</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </body>
+</html>

@@ -1,4 +1,4 @@
 <?php
 
-header("/index.html");
+header("Location: /index.html");
 die();

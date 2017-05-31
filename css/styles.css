@@ -40,12 +40,29 @@ body {
     color: hsl(70, 100%, 93%);
 }
 
+#winningGame {
+    background-color: hsl(0, 100%, 100%);
+    margin-top: 11px;
+}
+
+#winningGame table {
+    width: 128px;
+    margin-top: 9px;
+}
+
+#winningGame table tr td {
+    background-color: hsl(0, 0%, 0%);
+}
+
+#winningGame table tr td.required {
+    background-color: hsl(0, 100%, 50%);
+}
+
+
 #numbersCalledBoard {
     float: left;
     clear: none;
 }
-
-
 
 .bingoLetter, .bingoNumber {
     text-align: center;
@@ -69,4 +86,36 @@ body {
 
 .called  {
     color: hsl(56, 100%, 50%);
+}
+
+
+
+
+
+
+#cardBoard {
+    margin-top: 10px;
+}
+
+.card {
+    height: 270px;
+    width: 222px;
+    float: left;
+    cursor: pointer;
+    color: hsl(0, 100%, 0%);
+    font-size: 2em;
+    border: 1px solid hsl(0, 0%, 25%);
+    margin-right: 25px;
+    margin-top: 5px;
+}
+
+.cardNumber {
+    text-align: center;
+    padding: 2px;
+    border: 1px solid hsl(0, 0%, 25%);
+}
+
+.dabbed {
+    background-color: hsl(240, 100%, 30%);
+    color: hsl(0, 100%, 100%);
 }

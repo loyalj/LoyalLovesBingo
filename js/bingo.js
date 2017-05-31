@@ -3,6 +3,24 @@ function Bingo() {
     this.calledNumbers = [];
     this.lastCalledNumber = null;
     this.lastCalledLetter = null;
+    this.cards = [];
+   
+
+    this.winningGame = [
+        1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1, 
+        1, 1, 1, 1, 1
+    ];
+
+    /*this.winningGame = [
+        1, 0, 0, 0, 1,
+        0, 0, 0, 0, 0, 
+        0, 0, 1, 0, 0, 
+        0, 0, 0, 0, 0,     
+        1, 0, 0, 0, 1
+    ];*/
 
     this.numbers = {
         'b': [ 1, 15],
@@ -19,6 +37,7 @@ Bingo.prototype.reset = function() {
     this.uncalledNumbers = [];
     this.calledNumbers = [];
     this.lastCalledNumber = null;
+    this.cards = [];
 
     for(i = 1; i <= 75; i++) {
         this.uncalledNumbers.push(i);
@@ -59,3 +78,55 @@ Bingo.prototype.callNumber = function() {
 
     return this.lastCalledNumber;
 };
+
+Bingo.prototype.addCard = function() {
+    var newCard = [];
+
+    // Go through the letters
+    for(i = 1; i <= 5; i++) {
+        for (var letter in this.numbers) {
+            
+            // Check for the free space and insert a 0
+            if(newCard.length == 12) {
+                newCard.push(0);
+                continue;    
+            }
+
+            // Otherwise generate a number from the current letter range
+            var newNumber = Math.floor(Math.random() * (this.numbers[letter][1] - this.numbers[letter][0] + 1)) + this.numbers[letter][0];
+            
+            // Avoid duplicates
+            while (newCard.indexOf(newNumber) > -1) {
+                newNumber = Math.floor(Math.random() * (this.numbers[letter][1] - this.numbers[letter][0] + 1)) + this.numbers[letter][0];
+            }
+
+
+            newCard.push(newNumber);
+        }
+    }
+
+    this.cards.push(newCard);
+}
+
+
+Bingo.prototype.checkBingos = function(){
+    var bingoCount = 0;
+
+    for (var card in this.cards) {
+        var cardCheckArray = [];
+        for (var number in bHall.cards[card]) {
+            if((this.calledNumbers.indexOf(bHall.cards[card][number]) > -1) || (bHall.cards[card][number] == 0))  {
+                cardCheckArray.push(1);
+            }
+            else {
+                cardCheckArray.push(0);
+            }
+        }
+
+        if(JSON.stringify(cardCheckArray)==JSON.stringify(this.winningGame)) {
+            bingoCount++;
+        }
+    }
+
+    return bingoCount;
+}

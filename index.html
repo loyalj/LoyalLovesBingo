@@ -11,22 +11,63 @@
         <link rel="stylesheet" href="css/styles.css" type="text/css">
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="js/games.js"></script>
+        <!--script src="js/games.js"></script-->
         <script src="js/bingo.js"></script>
         <script src="js/main.js"></script>
     </head>
 
     <body>
         <div id="controls">
+            <button id="btnAddCard">Add Card</button>
             <button id="btnCallNumber">Call Number</button>
-            <button id="btnResetBoard">Reset Board</button>
+            <button id="btnCheckBingos">Check Bingos</button>
+            <button id="btnResetBoard">Reset Game</button>
         </div>
 
         <div id="bingoBoard">
             <div id="lastCalledNumber">
-
+<span id="lastLetter">--</span><br>
                 <span id="lastNumber">00</span><br>
-                <span id="lastLetter">--</span>
+                
+                <div id="winningGame">
+                    <table>
+                        <tr>
+                            <td class="required">&nbsp</td>
+                            <td>&nbsp</td>
+                            <td>&nbsp</td>
+                            <td>&nbsp</td>
+                            <td class="required">&nbsp</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp</td>
+                            <td>&nbsp</td>
+                            <td>&nbsp</td>
+                            <td>&nbsp</td>
+                            <td>&nbsp</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp</td>
+                            <td>&nbsp</td>
+                            <td>&nbsp</td>
+                            <td>&nbsp</td>
+                            <td>&nbsp</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp</td>
+                            <td>&nbsp</td>
+                            <td>&nbsp</td>
+                            <td>&nbsp</td>
+                            <td>&nbsp</td>
+                        </tr>
+                        <tr>
+                            <td  class="required">&nbsp</td>
+                            <td>&nbsp</td>
+                            <td>&nbsp</td>
+                            <td>&nbsp</td>
+                            <td  class="required">&nbsp</td>
+                        </tr>
+                    </table>
+                </div>
             </div>
             <div id="numbersCalledBoard">
                 <table>
@@ -127,6 +168,9 @@
                 </table>
             </div>
             <div class="clear"></div>
+        </div>
+
+        <div id="cardBoard">
         </div>
     </body>
 </html>

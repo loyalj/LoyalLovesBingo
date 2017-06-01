@@ -14,13 +14,13 @@ function Bingo() {
         1, 1, 1, 1, 1
     ];
 
-    /*this.winningGame = [
+    this.winningGame = [
         1, 0, 0, 0, 1,
         0, 0, 0, 0, 0, 
         0, 0, 1, 0, 0, 
         0, 0, 0, 0, 0,     
         1, 0, 0, 0, 1
-    ];*/
+    ];
 
     this.numbers = {
         'b': [ 1, 15],
@@ -116,7 +116,7 @@ Bingo.prototype.checkBingos = function(){
         var cardCheckArray = [];
         for (var number in bHall.cards[card]) {
             if((this.calledNumbers.indexOf(bHall.cards[card][number]) > -1) || (bHall.cards[card][number] == 0))  {
-                cardCheckArray.push(1);
+                cardCheckArray.push(1 && this.winningGame[number]);
             }
             else {
                 cardCheckArray.push(0);

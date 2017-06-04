@@ -81,7 +81,10 @@ function btnCheckBingos() {
 
     if(bingoCount > 0) {
         alert("YOU GOT A BINGO!");
-        nextGame();    
+
+        if($("#chkAutoNextGame").is(":checked") == true) {
+            nextGame();
+        }
     }
     else {
         alert("YOU GOT NO BINGOS!");

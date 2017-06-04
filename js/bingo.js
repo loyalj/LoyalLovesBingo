@@ -1,27 +1,15 @@
 function Bingo() {
+    // Set up the ball bins. TODO, replace with index system?
     this.uncalledNumbers = [];
     this.calledNumbers = [];
+    
+    // Track the last called number and for convience, its letter
     this.lastCalledNumber = null;
     this.lastCalledLetter = null;
+    
     this.cards = [];
    
-
-    this.winningGame = [
-        1, 1, 1, 1, 1, 
-        1, 1, 1, 1, 1, 
-        1, 1, 1, 1, 1, 
-        1, 1, 1, 1, 1, 
-        1, 1, 1, 1, 1
-    ];
-
-    this.winningGame = [
-        1, 0, 0, 0, 1,
-        0, 0, 0, 0, 0, 
-        0, 0, 1, 0, 0, 
-        0, 0, 0, 0, 0,     
-        1, 0, 0, 0, 1
-    ];
-
+    // Define the ranges of the bingo numbers
     this.numbers = {
         'b': [ 1, 15],
         'i': [16, 30],
@@ -29,21 +17,33 @@ function Bingo() {
         'g': [46, 60],
         'o': [61, 75]
     };
+
+    // Set the game to the first one in the games array
+    this.changeGame(0);
 }
+
 
 
 Bingo.prototype.reset = function() {
 
     this.uncalledNumbers = [];
     this.calledNumbers = [];
+
     this.lastCalledNumber = null;
+    this.lastCalledLetter = null;
+
     this.cards = [];
 
+    // Create a set of bingo numbers from 1 to 75
     for(i = 1; i <= 75; i++) {
         this.uncalledNumbers.push(i);
     }
 
+    // Set the game to the first one in the games array
+    this.changeGame(0);
 };
+
+
 
 Bingo.prototype.shuffle = function() {
     // Shuffle algorithm found here 
@@ -64,6 +64,8 @@ Bingo.prototype.shuffle = function() {
     }
 };
 
+
+
 Bingo.prototype.callNumber = function() {
 
     this.lastCalledNumber = this.uncalledNumbers.shift() 
@@ -78,6 +80,8 @@ Bingo.prototype.callNumber = function() {
 
     return this.lastCalledNumber;
 };
+
+
 
 Bingo.prototype.addCard = function() {
     var newCard = [];
@@ -109,24 +113,237 @@ Bingo.prototype.addCard = function() {
 }
 
 
+
 Bingo.prototype.checkBingos = function(){
     var bingoCount = 0;
 
     for (var card in this.cards) {
-        var cardCheckArray = [];
-        for (var number in bHall.cards[card]) {
-            if((this.calledNumbers.indexOf(bHall.cards[card][number]) > -1) || (bHall.cards[card][number] == 0))  {
-                cardCheckArray.push(1 && this.winningGame[number]);
+        for(var pattern in this.winningGame.patterns) {
+            var cardCheckArray = [];
+            for (var number in bHall.cards[card]) {
+                if((this.calledNumbers.indexOf(bHall.cards[card][number]) > -1) || (bHall.cards[card][number] == 0))  {
+                    cardCheckArray.push(1 && this.winningGame.patterns[pattern][number]);
+                }
+                else {
+                    cardCheckArray.push(0);
+                }
             }
-            else {
-                cardCheckArray.push(0);
-            }
-        }
 
-        if(JSON.stringify(cardCheckArray)==JSON.stringify(this.winningGame)) {
-            bingoCount++;
+            if(JSON.stringify(cardCheckArray)==JSON.stringify(this.winningGame.patterns[pattern])) {
+                bingoCount++;
+                break;
+            }
         }
     }
 
     return bingoCount;
 }
+
+Bingo.prototype.changeGame = function(gameID) {
+    this.winningGame = this.games[gameID];
+}
+
+
+Bingo.prototype.games = [
+
+    {
+        name: 'One Corner (anywhere)',
+        patterns: [
+            [
+                1, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 
+                0, 0, 1, 0, 0, 
+                0, 0, 0, 0, 0,     
+                0, 0, 0, 0, 0
+            ],
+            [
+                0, 0, 0, 0, 1,
+                0, 0, 0, 0, 0, 
+                0, 0, 1, 0, 0, 
+                0, 0, 0, 0, 0,     
+                0, 0, 0, 0, 0
+            ],
+            [
+                0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 
+                0, 0, 1, 0, 0, 
+                0, 0, 0, 0, 0,     
+                0, 0, 0, 0, 1
+            ],
+            [
+                0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 
+                0, 0, 1, 0, 0, 
+                0, 0, 0, 0, 0,     
+                1, 0, 0, 0, 0
+            ]
+        ]
+    },
+    {
+        name: 'Two Corners (anywhere)',
+        patterns: [
+            [
+                1, 0, 0, 0, 1,
+                0, 0, 0, 0, 0, 
+                0, 0, 1, 0, 0, 
+                0, 0, 0, 0, 0,     
+                0, 0, 0, 0, 0
+            ],
+            [
+                1, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 
+                0, 0, 1, 0, 0, 
+                0, 0, 0, 0, 0,     
+                0, 0, 0, 0, 1
+            ],
+            [
+                1, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 
+                0, 0, 1, 0, 0, 
+                0, 0, 0, 0, 0,     
+                1, 0, 0, 0, 0
+            ],
+            [
+                0, 0, 0, 0, 1,
+                0, 0, 0, 0, 0, 
+                0, 0, 1, 0, 0, 
+                0, 0, 0, 0, 0,     
+                0, 0, 0, 0, 1
+            ],
+            [
+                0, 0, 0, 0, 1,
+                0, 0, 0, 0, 0, 
+                0, 0, 1, 0, 0, 
+                0, 0, 0, 0, 0,     
+                1, 0, 0, 0, 0
+            ],
+            [
+                0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 
+                0, 0, 1, 0, 0, 
+                0, 0, 0, 0, 0,     
+                1, 0, 0, 0, 1
+            ]
+        ]
+    },
+    {
+        name: 'One Line (any way)',
+        patterns: [
+            [
+                1, 1, 1, 1, 1,
+                0, 0, 0, 0, 0,
+                0, 0, 1, 0, 0,
+                0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0
+            ],
+            [
+                0, 0, 0, 0, 0,
+                1, 1, 1, 1, 1,
+                0, 0, 1, 0, 0,
+                0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0
+            ],
+            [
+                0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0,
+                1, 1, 1, 1, 1,
+                0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0
+            ],
+            [
+                0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0,
+                0, 0, 1, 0, 0,
+                1, 1, 1, 1, 1,
+                0, 0, 0, 0, 0
+            ],
+            [
+                0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0,
+                0, 0, 1, 0, 0,
+                0, 0, 0, 0, 0,
+                1, 1, 1, 1, 1
+            ],
+            [
+                1, 0, 0, 0, 0,
+                1, 0, 0, 0, 0,
+                1, 0, 1, 0, 0,
+                1, 0, 0, 0, 0,
+                1, 0, 0, 0, 0
+            ],
+            [
+                0, 1, 0, 0, 0,
+                0, 1, 0, 0, 0,
+                0, 1, 1, 0, 0,
+                0, 1, 0, 0, 0,
+                0, 1, 0, 0, 0
+            ],
+            [
+                0, 0, 1, 0, 0,
+                0, 0, 1, 0, 0,
+                0, 0, 1, 0, 0,
+                0, 0, 1, 0, 0,
+                0, 0, 1, 0, 0
+            ],
+            [
+                0, 0, 0, 1, 0,
+                0, 0, 0, 1, 0,
+                0, 0, 1, 1, 0,
+                0, 0, 0, 1, 0,
+                0, 0, 0, 1, 0
+            ],
+            [
+                0, 0, 0, 0, 1,
+                0, 0, 0, 0, 1,
+                0, 0, 1, 0, 1,
+                0, 0, 0, 0, 1,
+                0, 0, 0, 0, 1,
+            ],
+            [
+                1, 0, 0, 0, 0,
+                0, 1, 0, 0, 0,
+                0, 0, 1, 0, 0,
+                0, 0, 0, 1, 0,
+                0, 0, 0, 0, 1
+            ],
+            [
+                0, 0, 0, 0, 1,
+                0, 0, 0, 1, 0,
+                0, 0, 1, 0, 0,
+                0, 1, 0, 0, 0,
+                1, 0, 0, 0, 0,
+            ]
+        ]
+    },
+    {
+        name: 'Four Corners',
+        patterns: [[
+            1, 0, 0, 0, 1,
+            0, 0, 0, 0, 0, 
+            0, 0, 1, 0, 0, 
+            0, 0, 0, 0, 0,     
+            1, 0, 0, 0, 1
+        ]]
+    },
+    {
+        name: 'Four Stamps',
+        patterns: [[
+            1, 1, 0, 1, 1,
+            1, 1, 0, 1, 1, 
+            0, 0, 1, 0, 0, 
+            1, 1, 0, 1, 1,     
+            1, 1, 0, 1, 1
+        ]]
+    },
+    {
+        name: 'Blackout',
+        patterns: [[
+            1, 1, 1, 1, 1, 
+            1, 1, 1, 1, 1, 
+            1, 1, 1, 1, 1, 
+            1, 1, 1, 1, 1, 
+            1, 1, 1, 1, 1
+        ]]
+    }
+
+];

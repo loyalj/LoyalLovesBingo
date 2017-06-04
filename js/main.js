@@ -1,14 +1,22 @@
 var bHall = new Bingo();
+var autoCallTimer = false;
+var gamePreviewTimer = false;
+var lastGamePreview = 0;
+var gamePreviewLength = 4000;
+var callerSpeed = 10000;
+var startCardCount = 5;
+var currentGame = 0;
+
 
 $( document ).ready(function() {
-    bHall.reset();
-    bHall.shuffle();
+    
+    loadGames();
+    btnResetBoard()
+    
 
-
-
-    for(c = 1; c <= 2; c++) {
-       bHall.addCard();
-    }
+    // Hook game change drop down
+    $("#optGame").change(changeGames);
+    $("#chkAutoCall").change(changeAutoCall);
 
     // Hook Buttons
     $("#btnAddCard").click(btnAddCard);
@@ -16,7 +24,8 @@ $( document ).ready(function() {
     $("#btnCheckBingos").click(btnCheckBingos);
     $("#btnResetBoard").click(btnResetBoard);
 
-    renderCards();
+
+    gamePreviewTimer = setInterval(renderGamePreview, gamePreviewLength);
 });
 
 
@@ -32,6 +41,8 @@ function btnCallNumber() {
     }
 }
 
+
+
 function btnResetBoard() {
     //Reset the UI
     $(".bingoNumber").removeClass('called');
@@ -42,12 +53,20 @@ function btnResetBoard() {
     bHall.reset();
     bHall.shuffle();
 
-    for(c = 1; c <= 2; c++) {
+    for(c = 1; c <= startCardCount; c++) {
        bHall.addCard();
     }
 
+    currentGame = 0;
+    bHall.changeGame(currentGame);
+    $('#optGame').val(currentGame);
+
     renderCards();
+    lastGamePreview = 0;
+    renderGamePreview();
 }
+
+
 
 
 function btnAddCard() {
@@ -55,19 +74,88 @@ function btnAddCard() {
     renderCards();
 }
 
+
+
 function btnCheckBingos() {
     var bingoCount = bHall.checkBingos();
 
-    if(bingoCount > 1) {
-        alert("YOU GOT SOME BINGOS!");
-    }
-    else if(bingoCount > 0) {
-        alert("YOU GOT A BINGO!");    
+    if(bingoCount > 0) {
+        alert("YOU GOT A BINGO!");
+        nextGame();    
     }
     else {
         alert("YOU GOT NO BINGOS!");
     }
 }
+
+
+
+
+function loadGames() {
+    $("#optGame").empty();
+
+    for(var game in bHall.games) {
+        $("#optGame").append("<option value='" + game + "'>" + bHall.games[game].name + "</option>");
+    }
+}
+
+
+
+
+function changeGames() {
+    bHall.changeGame($(this).val());
+    currentGame = $(this).val();
+    
+    lastGamePreview = 0;
+    renderGamePreview();
+}
+
+
+
+function nextGame() {
+    currentGame++;
+
+    if(currentGame > bHall.games.length - 1) {
+        btnResetBoard();
+        return;
+    }
+
+    bHall.changeGame(currentGame);
+    
+    lastGamePreview = 0;
+    renderGamePreview();
+
+    $('#optGame').val(currentGame);
+}
+
+
+
+
+function renderGamePreview() {
+    
+    // Clear out the old pattern from the board
+    $("#winningGame table tbody tr td").removeClass("required");
+    
+
+    // Run through the current pattern and display it
+    for(var cell in bHall.winningGame.patterns[lastGamePreview]) {
+        if(bHall.winningGame.patterns[lastGamePreview][cell] == 1) {
+            var cellId = parseInt(cell) + 1;
+            $("#wg-" + cellId).addClass("required");
+        }
+    }
+
+    // Cycle to the next game preview
+    lastGamePreview++;
+
+    // Loop at the end of the patterns
+    if(lastGamePreview > (bHall.winningGame.patterns.length - 1)) {
+        lastGamePreview = 0;
+    }
+}
+
+
+
 
 function renderCards() {
 
@@ -109,6 +197,9 @@ function renderCards() {
     $('.cardNumber').click(clickCardNumber);
 }
 
+
+
+
 function clickCardNumber() {
     if($(this).hasClass('dabbed')) {
         $(this).removeClass('dabbed');
@@ -117,3 +208,16 @@ function clickCardNumber() {
         $(this).addClass('dabbed');
     }
 }
+
+
+
+
+function changeAutoCall() {
+    var autoCallVal = $('#chkAutoCall').is(":checked");
+    clearInterval(autoCallTimer);
+
+    if(autoCallVal == true) {
+        autoCallTimer = setInterval(btnCallNumber, callerSpeed);
+    }
+}
+

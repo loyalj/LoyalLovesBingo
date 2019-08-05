@@ -12,22 +12,32 @@
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <!--script src="js/games.js"></script-->
+		<script src="js/bingo_caller.js"></script>
         <script src="js/bingo.js"></script>
         <script src="js/main.js"></script>
     </head>
 
     <body>
         <div id="controls">
+			<!-- label for="optGame">Game:</label -->
             <select id="optGame"></select>
-            <button id="btnAddCard">Add Card</button>
-            <button id="btnCallNumber">Call Number</button>
-            <input type="checkbox" id="chkAutoCall">
+            
+			<button id="btnResetBoard">Reset Game</button>
+			
+			<button id="btnAddCard" style="display: none;">Add Card</button>
+			
+			<button id="btnCheckBingos">Check Bingos</button>
+            
+			<button id="btnCallNumber">Call Number</button>
+            
+			<input type="checkbox" id="chkAutoCall">
             <label for="chkAutoCall">Auto Call</label>
-            <button id="btnCheckBingos">Check Bingos</button>
-            <input type="checkbox" id="chkAutoNextGame">
-            <label for="chkAutoNextGame">Next game on Bingo</label>
-            <button id="btnResetBoard">Reset Game</button>
-
+			
+			<input type="checkbox" id="chkCallerSpeech" checked>
+			<label for="chkCallerSpeech">Caller Voice</label>
+			
+            <input type="checkbox" id="chkAutoNextGame" style="display: none;">
+            <label for="chkAutoNextGame" style="display: none;">Continue to Next Game on Bingo</label>
         </div>
 
         <div id="bingoBoard">
@@ -175,8 +185,7 @@
             </div>
             <div class="clear"></div>
         </div>
-
-        <div id="cardBoard">
-        </div>
+		<div id="cardBoard">
+		</div>
     </body>
 </html>

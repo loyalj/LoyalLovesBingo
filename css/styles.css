@@ -1,9 +1,16 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
+	margin:0px;
 }
 
 #controls {
-    padding-bottom: 10px;
+    padding: 5px;
+	background-color: hsl(180, 0%, 95%);
+	box-shadow: 0px 3px hsla(0, 0%, 25%, 0.2);
+	border-bottom: 1px solid hsl(0, 0%, 70%);
+	margin-bottom: 10px;
+	position: sticky;
+	top: 0px;
 }
 
 .clear {
@@ -14,6 +21,9 @@ body {
     background-color: hsl(0, 0%, 20%);
     padding: 3px;
     width: 894px;
+	border-radius: 8px;
+	margin: 0px auto;
+	box-shadow: 6px 6px hsla(0, 0%, 25%, 0.2);
 }
 
 #lastCalledNumber {
@@ -94,28 +104,55 @@ body {
 
 
 #cardBoard {
-    margin-top: 10px;
+	width: 92.25%;
+	margin: 20px auto;
 }
 
 .card {
     float: left;
     cursor: pointer;
+	background-color: hsl(180, 55%, 95%);
     color: hsl(0, 100%, 0%);
     font-size: 2em;
-    border: 1px solid hsl(0, 0%, 25%);
-    margin-right: 25px;
+    border: 1px solid hsl(0, 0%, 50%);
+    margin-right: 12px;
+	margin-left: 12px;
     margin-top: 5px;
+	margin-bottom: 25px;
+	border-radius: 8px;
+	box-shadow: 3px 3px hsla(0, 0%, 25%, 0.2);
+}
+
+.card > table {
+	border-collapse: separate;
+	border-spacing: 5px;
 }
 
 .cardNumber {
     text-align: center;
+	background-color: hsl(0, 100%, 100%);
+	color: hsl(0, 0%, 10%);
+	font-size: 0.8em;
     padding: 2px;
-    border: 1px solid hsl(0, 0%, 25%);
+    border: 1px solid hsl(0, 0%, 55%);
     height: 38px;
-    min-width: 38px;
+	min-width: 38px;
+    max-width: 38px;
+	padding: 5px;
+	border-radius: 8px;
+}
+
+.cardFree {
+	font-size: 0.45em;
+	font-weight: bold;
+}
+
+.maskedNumber {
+	background-color: hsl(0, 0%, 95%);
+	color: hsl(0, 0%, 75%);
 }
 
 .dabbed {
-    background-color: hsl(240, 100%, 30%);
-    color: hsl(0, 100%, 100%);
+    background-color: hsl(315, 60%, 70%);
+    color: hsl(0, 0%, 95%);
 }

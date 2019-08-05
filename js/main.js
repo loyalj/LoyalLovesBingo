@@ -1,10 +1,10 @@
 var bHall = new Bingo();
+var bCaller = new BingoCaller();
 var autoCallTimer = false;
 var gamePreviewTimer = false;
 var lastGamePreview = 0;
-var gamePreviewLength = 4000;
-var callerSpeed = 10000;
-var startCardCount = 5;
+var gamePreviewLength = 6000;
+var startCardCount = 30;
 var currentGame = 0;
 
 
@@ -34,10 +34,26 @@ $( document ).ready(function() {
 function btnCallNumber() {
     if(bHall.uncalledNumbers.length > 0) {
         bHall.callNumber();
+		bCaller.callNumber(bHall);
 
         $("#bn-" + bHall.lastCalledNumber).addClass('called');
         $("#lastNumber").html('' + bHall.lastCalledNumber);
         $("#lastLetter").html(bHall.lastCalledLetter.toUpperCase());
+		
+		// Hacky way to get the caller to update their timmer... should fix this up a bit
+		changeAutoCall();
+		
+		if((window.speechSynthesis.getVoices().length > 0) && $("#chkCallerSpeech").is(":checked")) {
+			
+			var bingoCall = new SpeechSynthesisUtterance(); 
+			
+			bingoCall.voice = window.speechSynthesis.getVoices()[0]; 
+			bingoCall.pitch = 0.4; 
+			bingoCall.rate = 0.9;
+			bingoCall.text = bCaller.lastCallText;
+			
+			window.speechSynthesis.speak(bingoCall);
+		}
     }
 }
 
@@ -111,6 +127,7 @@ function changeGames() {
     
     lastGamePreview = 0;
     renderGamePreview();
+	renderCards();
 }
 
 
@@ -163,23 +180,35 @@ function renderGamePreview() {
 function renderCards() {
 
     $("#cardBoard").empty();
-    
-    for (var card in bHall.cards) {
+
+    for (var card in bHall.playerCards) {
 
         var cardTable = $("<table></table>");
         var currentColumn = 1;
         var rowHTML = "<tr><th>B</th><th>I</th><th>N</th><th>G</th><th>O</th><tr>";
+		
 
-        for(var number in bHall.cards[card]) {
+        for(var number in bHall.playerCards[card]) {
 
-            displayText = "";
+            var displayText = "";
+			var cardNumberClass = "cardNumber";
             
             // Hide the 0 free space
-            if(bHall.cards[card][number] > 0) {
-                displayText = bHall.cards[card][number];
+            if(bHall.playerCards[card][number] > 0) {
+                displayText = bHall.playerCards[card][number];
             }
+			else {
+				displayText = "FREE"
+				cardNumberClass += " cardFree";
+			}
+			
+			// Mask out the number based on the game being played
+			if(bHall.winningGame.mask[number]) {
+                cardNumberClass += " maskedNumber"; 
+            }
+			
 
-            rowHTML += "<td class='cardNumber'>" + displayText + "</td>";
+            rowHTML += "<td class='" + cardNumberClass + "'>" + displayText + "</td>";
             currentColumn++;
 
             if(currentColumn > 5) {
@@ -192,11 +221,11 @@ function renderCards() {
         
         var cardHTML = $("<div class='card'></div>").append(cardTable);
 
-        cardHTML.appendTo("#cardBoard");
-
-        
+        cardHTML.appendTo("#cardBoard");        
     }
-
+	
+	// Add clear div and clicks to the card numbers
+	$("<div style='clear: both;'></div>").appendTo("#cardBoard");
     $('.cardNumber').click(clickCardNumber);
 }
 
@@ -204,6 +233,10 @@ function renderCards() {
 
 
 function clickCardNumber() {
+	if($(this).hasClass('maskedNumber')) {
+		return;
+	}
+	
     if($(this).hasClass('dabbed')) {
         $(this).removeClass('dabbed');
     } 
@@ -218,9 +251,11 @@ function clickCardNumber() {
 function changeAutoCall() {
     var autoCallVal = $('#chkAutoCall').is(":checked");
     clearInterval(autoCallTimer);
+	$("#btnCallNumber").prop('disabled', false);
 
     if(autoCallVal == true) {
-        autoCallTimer = setInterval(btnCallNumber, callerSpeed);
+        autoCallTimer = setInterval(btnCallNumber, bCaller.callerCurrentWaitTime);
+		$("#btnCallNumber").prop('disabled', true);
     }
 }
 

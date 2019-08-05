@@ -4,7 +4,7 @@ var autoCallTimer = false;
 var gamePreviewTimer = false;
 var lastGamePreview = 0;
 var gamePreviewLength = 6000;
-var startCardCount = 30;
+var startCardCount = 5;
 var currentGame = 0;
 
 

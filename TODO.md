@@ -11,6 +11,8 @@
 - Other players difficulty settings controls how many cards they play 
 	- Level: First Timer (1), Casual (3), Dedicated (5), Hardcore (10)
 - Add internationalized caller text strings
+- add more caller phrases
+-add new callers
 
 
 

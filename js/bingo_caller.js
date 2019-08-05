@@ -30,7 +30,7 @@ BingoCaller.prototype.callNumber = function(bingoHall) {
 	}
 	else {
 		// Call the number in the long format and wait the normal time
-		callText += "{0} {1}. {0}, Number {1}.".format(bingoHall.lastCalledLetter, bingoHall.lastCalledNumber);
+		callText += "{0} {1}. {0}. Number {1}.".format(bingoHall.lastCalledLetter, bingoHall.lastCalledNumber);
 		waitTime += 14000;
 	}
 	
